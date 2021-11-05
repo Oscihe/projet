@@ -74,3 +74,4 @@ int main(int argc, char * argv[]) {
 	printf("L'usine de Bieudron produit au maximum %f joules par jour.\n", E);
 	return 0;
 }
+//il y a trop d'énergie qui est produite comparé à la réalité => à voir si modifie des trucs
