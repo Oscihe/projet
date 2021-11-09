@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+//#include <json-c/json.h>
 //#include <curl/curl.h>
 
 //commencer par ouvrir le fichier de données météo et ensuite
@@ -23,20 +24,26 @@ struct Gps_point {
 //du lac+ses alentours en latitude car le lac est pratiquement parallèle aux
 //latitudes. (9km)
 double b=360*2/(M_PI*6371*2);//0.017986 (1.76km)
-
+//46.025305, 7.362658
+//46.025979, 7.439286
+//46.095756,
 double latitude=4	;
 double longitude=7.375611;
+int p=0;
 int main(int argc, char * argv[]) {
-	for (int i=0; i<90;i++){
+	FILE* doc=fopen("precipitation.json","w");
+	for (int i=0; i<2;i++){
 		longitude=7.375611;
-		latitude=latitude+0.001;
-		for (int j=0;j<18;j++){
-			longitude=longitude+0.001;
+		latitude=latitude+0.04;
+		for (int j=0;j<2;j++){
+			p=p+1;
+			longitude=longitude+0.04;
 			char site[1000];
-			sprintf(site,"curl \"https://my.meteoblue.com/packages/basic-1h?apikey=8265088095b8&lat=%f&lon=%f&asl=453&tz=Europe%%2FZurich&city=Lausanne\" -o grimsel-eau",latitude,longitude);
+			sprintf(site,"curl \"https://my.meteoblue.com/packages/basic-1h?apikey=8265088095b8&lat=%f&lon=%f&asl=453&tz=Europe%%2FZurich&city=Lausanne\" -o precipitation%d.json",latitude,longitude,p);
 			printf("%s\n",site);
 			system(site);
-		}
+}
 	}
+fclose(doc);
 return 0;
 }
