@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+// je change de fichier, je vais prendre celui de l'exercice Suisse
+//et l'ouvrir avec python et le mettre dans un csv
 
 int main(int argc, char * argv[]) {
     // Tableau avec les altitudes: 2501 valeurs en x (largeur),
