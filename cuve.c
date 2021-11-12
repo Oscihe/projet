@@ -3,74 +3,73 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-bool readCsv(char * filename, double * values, int sizeX, int sizeY) {
-    FILE * file = fopen(filename, "r");
-    if (file == NULL) {
-        fprintf(stderr, "File %s not found.", filename);
-        return false;
-    }
-    int y = 0;
-    char buffer[10000];
-    while (fgets(buffer, 10000, file) != NULL) {
-        int x = 0;
-        char * start = buffer;
-        while (true) {
-            values[y * sizeX + x] = atof(start);
-            start = strchr(start, ',');
-            if (start == NULL) break;
-            start += 1;
-            x += 1;
-            if (x >= sizeX) break;
-        }
-        y += 1;
-        if (y >= sizeY) break;
-    }
-    fclose(file);
-    return true;
+struct Grille {
+	double lat;
+	double long;
+	double pluie;
+	double alt;
+	int lac;
+	int catch;
+	double time;
 }
-double  trajet (int pos_x, int pos_y, double * tableau, double * compteur, double precipitation) {
-	double h_goutte = tableau[pos_x + pos_y*100];
-	double h_min = h_goutte;
-	while (pos_x > -1 && pos_x < 100 && pos_y > -1 && pos_y < 100) {
-		compteur[pos_x + pos_y*100] += 1;
-		int y_min = 0;
-		int x_min = 0;
-		for (int i= -1; i<2; i++){
-			for (int j= -1; j<2; j++){
-				if (h_min > tableau[pos_x+i + (pos_y+j)*100]) {
-					h_min = tableau[pos_x+i + (pos_y+j)*100];
-					y_min = pos_y+j;
-					x_min = pos_x+i;
-				}
+int indexing(int x,int y){
+  return y*37+x;
+}
+void initialisation(double malloc_hauteur,int compteur,double quantité_precip,double lac_lat_max,double lac_lat_min,double lac_long_min,double lac_long_max){
+  int lenxp=37;
+  int lenyp=44;
+  int total=lenxp*lenyp;
+  point.long=malloc[compteur];
+  point.lat=malloc[compteur+1];
+  point.pluie=quantité_precip;
+  point.alt=malloc_hauteur[compteur+3];
+  if (point.long<lac_long_max&&point.long>lac_long_min&&point.lat<lac_lat_max&&lac_lat_min<point.lat){
+    point.lac=1;
+    else{
+      point.lac=0;
+    }
+  }
+}
+double  accumulation (int x,int y) {
+  int z=indexing(x,y);
+  int pos_x=x;
+  int pos_y=y;
+  int y_min = 0;
+  int x_min = 0;
+  int hmin=0;
+	while (pos_x > -1 && pos_x <37 && pos_y > -1 && pos_y < 44) {
+		for (int x= -1; i<2; i++){
+			for (int y= -1; j<2; j++){
+        int i=indexing(x,y);
+				if (h_min > grilles[i].alt):
+  					h_min = grilles[i].alt;
+  					y_min = grilles[i].lat;
+  					x_min = grilles[i].long;
+        }
 			}
 		}
 		pos_x = x_min;
 		pos_y = y_min;
 	}
-	return h_min;}
+  grilles[z].catch=grilles[i].pluie
+	return 0;
+}
 int main(int argc, char * argv[]) {
-    double * terrain = malloc(100 * 100 * sizeof (double));
-    double * eau = malloc(100 * 100 * sizeof (double));
-    readCsv("grimsel-terrain.csv", terrain, 100, 100);
-    readCsv("grimsel-eau.csv", eau, 100, 100);
-	double * compte = calloc(10000, sizeof (double));
-	double * total = malloc(100 * 100 * sizeof (double));
-	for (int j = 0; j< 100; j++) {
-		for (int k = 0; k < 100; k++) {
-			int result = trajet(j,k,total,compte);
-		printf(" %0.f, ", compte[j+100*k]);
-		}
-	}
-	FILE * file = fopen("grimsel-gouttes.csv", "w");
-    for (int y = 0; y < 100; y++) {
-        for (int x = 0; x < 100; x++) {
-
-            if (x > 0) fprintf(file, ", ");
-            fprintf(file, "%0.f", compte[100*y +x]);
-        }
-        fprintf(file, "\n");
+  int lenxp=37;
+  int lenyp=44;
+  int total=lenxp*lenyp;
+  double quantite=0;
+  struct Grille grilles[total];
+  initialisation(malloc_hauteur,compteur,1,etc...)
+  for (x=0;x<lenxp;x++){
+    for (y=0;y<lenyp;y++){
+      accumulation(x,y);
+      int ti=indexing(x,y);
+      if (grilles.catch[ti]=1){
+        quantité=quantité+grilles.catch[ti];
+      }
     }
-    fclose(file);
-    free(total);
-    return 0;
+  }
+  double volume_tot=quantité/1000*200;
+  return 0;
 }
