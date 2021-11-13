@@ -11,7 +11,7 @@ struct Grille {
 	int lac;
 	int catch;
 	double time;
-}
+};
 int indexing(int x,int y){
   return y*37+x;
 }
@@ -19,18 +19,18 @@ void initialisation(double malloc_hauteur,int compteur,double quantité_precip,d
   int lenxp=37;
   int lenyp=44;
   int total=lenxp*lenyp;
-  point.long=malloc[compteur];
-  point.lat=malloc[compteur+1];
-  point.pluie=quantité_precip;
-  point.alt=malloc_hauteur[compteur+3];
+  Grilles[compteur].long=malloc[compteur];
+  Grilles[compteur].lat=malloc[compteur+1];
+  Grilles[compteur].pluie=quantité_precip;
+  Grilles[compteur].alt=malloc_hauteur[compteur+3];
   if (point.long<lac_long_max&&point.long>lac_long_min&&point.lat<lac_lat_max&&lac_lat_min<point.lat){
     point.lac=1;
-    else{
-      point.lac=0;
+  else{
+    point.lac=0;
     }
   }
 }
-double  accumulation (int x,int y) {
+double  accumulation (struct) {
   int z=indexing(x,y);
   int pos_x=x;
   int pos_y=y;
@@ -55,12 +55,14 @@ double  accumulation (int x,int y) {
 	return 0;
 }
 int main(int argc, char * argv[]) {
+
   int lenxp=37;
   int lenyp=44;
   int total=lenxp*lenyp;
   double quantite=0;
   struct Grille grilles[total];
-  initialisation(malloc_hauteur,compteur,1,etc...)
+  for (int l=0;l<total;l++){
+    initialisation(malloc_hauteur,l,1, struct Grille*,etc...)
   for (x=0;x<lenxp;x++){
     for (y=0;y<lenyp;y++){
       accumulation(x,y);
