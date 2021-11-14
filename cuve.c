@@ -19,10 +19,10 @@ void initialisation(double malloc_hauteur,int compteur,double quantité_precip,d
   int lenxp=37;
   int lenyp=44;
   int total=lenxp*lenyp;
-  Grilles[compteur].long=malloc[compteur];
-  Grilles[compteur].lat=malloc[compteur+1];
-  Grilles[compteur].pluie=quantité_precip;
-  Grilles[compteur].alt=malloc_hauteur[compteur+3];
+  grilles[compteur].long=malloc[compteur];
+  grilles[compteur].lat=malloc[compteur+1];
+  grilles[compteur].pluie=quantité_precip;
+  grilles[compteur].alt=malloc_hauteur[compteur+2];
   if (point.long<lac_long_max&&point.long>lac_long_min&&point.lat<lac_lat_max&&lac_lat_min<point.lat){
     point.lac=1;
   else{
@@ -41,7 +41,7 @@ double  accumulation (int compteur1) {
 		for (int x= -1; i<2; i++){
 			for (int y= -1; j<2; j++){
         int i=indexing(pos_x+x,pos_y+y);
-				if (h_min > grilles[i].alt):
+				if (h_min > grilles[i].alt){
   					h_min = grilles[i].alt;
   					y_min = grilles[i].lat;
   					x_min = grilles[i].long;
@@ -52,8 +52,9 @@ double  accumulation (int compteur1) {
 		pos_y = y_min;
 	}
   int u=indexing(x_min,y_min);
-  if grilles[u].lac=1{}
+  if grilles[u].lac=1{
     grilles[compteur1].catch=1;
+  }
 	return 0;
 }
 int main(int argc, char * argv[]) {
