@@ -38,11 +38,13 @@ for i in range(0, len(yp)):
     if 095200.00 <= yp[i] <= 103800.00:
         y_list.append(i)
 
+print(len(dhm200))
+"""
 alt_list = []
 for i in range(0, len(h)):
 
 #faire en c : un malloc avec les points et comme terrain
-
+"""
 """
 #le document contient toutes les altitudes en Suisse, dans des carrés de 200x200 m
 print("Lecture du document")

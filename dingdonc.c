@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+
 int lireligne(char*ligne){
     char * virgule1 = strchr(ligne, ' ');
     if (virgule1 == NULL) return 0;
@@ -11,14 +12,14 @@ int lireligne(char*ligne){
     int x=atof(ligne);
     int y=atof(virgule1+1);
     int z=atof(virgule2+1);
-    printf("%d,%d,%d",x,y,z);
+    printf("%f %f %f\n",x,y,z);
     return 0;
 }
 int main(int argc, char * argv[]) {
   //double ymax=...;
   //double xmin=...;
   //double index=(ymax-y)/200*37+(x-xmin)/200;
-  FILE * fichier = fopen("DHM200.xyz", "r");
+  FILE * fichier = fopen("DHM200.xyz", 'r');
   char ligne[100];
 //  double * altitudes = malloc(10000000 * sizeof (double));
   int i=0;

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+/*
 struct Grille {
 	double lat;
 	double long;
@@ -57,6 +58,7 @@ double  accumulation (int compteur1) {
   }
 	return 0;
 }
+*/
 int main(int argc, char * argv[]) {
 	FILE * fichier = fopen("DHM200.xyz", "r");
 	}
@@ -64,8 +66,12 @@ int main(int argc, char * argv[]) {
 	while (fgets(ligne, 100, fichier) != NULL) {
 			double valeur = atof(ligne);
 	printf("%f",valeur);
+	char * coordx = strchr(ligne, ' ');
+	if (coordx == NULL) return 0;
+	printf("%s\n", coordx);
 	}
 	fclose(fichier);
+	/*
   int lenxp=37;
   int lenyp=44;
   int total=lenxp*lenyp;
@@ -80,5 +86,6 @@ int main(int argc, char * argv[]) {
     }
   }
   double volume_tot=quantité/1000*200;
+	*/
   return 0;
 }
