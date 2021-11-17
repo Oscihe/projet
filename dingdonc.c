@@ -3,15 +3,22 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-int lireligne(char*ligne){
+struct Gpspoint{
+  double q;
+  double w;
+  float e;
+};
+struct Gpspoint talala[37*44];
+
+int lireligne(char*ligne,struct Gpspoint*point){
     char * virgule1 = strchr(ligne, ' ');
     if (virgule1 == NULL) return 0;
     char * virgule2 = strchr(virgule1 + 1, ' ');
     if (virgule2 == NULL) return 0;
-    int x=atof(ligne);
-    int y=atof(virgule1+1);
-    int z=atof(virgule2+1);
-    printf("%d,%d,%d",x,y,z);
+    point->q = atof(ligne);
+    point->w= atof(virgule1 + 1);
+    point->e = atof(virgule2 + 1);
+    return 1;
     return 0;
 }
 int main(int argc, char * argv[]) {
@@ -23,7 +30,7 @@ int main(int argc, char * argv[]) {
 //  double * altitudes = malloc(10000000 * sizeof (double));
   int i=0;
   while (fgets(ligne, 100, fichier) != NULL) {
-    lireligne(ligne);
+    lireligne(ligne,&);
     //printf("%d,%d,%d",x,y,z);
     //if(592800.00<=x<=600000.00&&095200.00<=y<=103800.00){
     //  altitudes[index]=z;
