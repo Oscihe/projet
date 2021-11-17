@@ -58,6 +58,14 @@ double  accumulation (int compteur1) {
 	return 0;
 }
 int main(int argc, char * argv[]) {
+	FILE * fichier = fopen("DHM200.xyz", "r");
+	}
+	char ligne[100];
+	while (fgets(ligne, 100, fichier) != NULL) {
+			double valeur = atof(ligne);
+	printf("%f",valeur);
+	}
+	fclose(fichier);
   int lenxp=37;
   int lenyp=44;
   int total=lenxp*lenyp;
