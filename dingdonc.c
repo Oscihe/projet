@@ -27,11 +27,14 @@ int lireLigne(char * ligne, struct GpsPoint * point) {
         point->latitude = v1;
         point->longitude = v2;
         point->altitude = v3;
-        printf("%f,%f,%f\n", point->longitude,point->latitude,point->altitude);
+        //printf("%f,%f,%f\n", point->longitude,point->latitude,point->altitude);
         //printf("%f\n",point->altitude );
         //printf("%f\n",point->alti );
+        return 1;
     }
-    return 1;
+    return 0;
+    //return 1;
+
 }
 
 int lireFichier(char * nomFichier, struct GpsPoint * tableauARemplir, int longueur) {
@@ -45,8 +48,11 @@ int lireFichier(char * nomFichier, struct GpsPoint * tableauARemplir, int longue
     while (fgets(buffer, 100, file) != NULL) {
         if (n >= longueur) break;
         int ok = lireLigne(buffer, &tableauARemplir[n]);
-        if (ok) n = n + 1;
-        //printf("%f,%f,%f\n", tableauARemplir[n].altitude);
+        if (ok) {
+          n = n + 1;
+          //printf("%f,%f,%f\n", tableauARemplir[n].altitude);
+          //printf("%d\n",n);
+        }
     }
 
     // Fermer le fichier et renvoyer le nombre de lignes lues
@@ -56,8 +62,9 @@ int lireFichier(char * nomFichier, struct GpsPoint * tableauARemplir, int longue
 
 int main(int argc, char * argv[]) {
     // Lire le fichier
-    struct GpsPoint * points = malloc(15000000*sizeof(struct GpsPoint));
-    int nbPoints = lireFichier("DHM200.xyz", points, 15000000*sizeof(double));
+    struct GpsPoint points[1628];
+    //struct GpsPoint * points = malloc(15000000*sizeof(struct GpsPoint));
+    int nbPoints = lireFichier("DHM200.xyz", points, 1628*sizeof(double));
     if (nbPoints == -1) {
         printf("Erreur: Le fichier n'existe pas ou n'est pas accessible.\n");
         return 1;
@@ -65,10 +72,10 @@ int main(int argc, char * argv[]) {
         printf("Erreur: Le fichier est vide ou pas dans le bon format.\n");
         return 1;
     }
+    //printf("%f",points[4].altitude);
 
-
-    //for (int i=0;i<nbPoints;i++){
-      //printf("%f\n", points+i);
-
+    for (int i=0;i<nbPoints;i++){
+      printf("%f,%f,%f\n", points[i].altitude,points[i].longitude,points[i].latitude);
+    }
     return 0;
 }
