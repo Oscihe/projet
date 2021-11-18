@@ -46,6 +46,7 @@ int lireFichier(char * nomFichier, struct GpsPoint * tableauARemplir, int longue
         if (n >= longueur) break;
         int ok = lireLigne(buffer, &tableauARemplir[n]);
         if (ok) n = n + 1;
+        //printf("%f,%f,%f\n", tableauARemplir[n].altitude);
     }
 
     // Fermer le fichier et renvoyer le nombre de lignes lues
@@ -64,7 +65,10 @@ int main(int argc, char * argv[]) {
         printf("Erreur: Le fichier est vide ou pas dans le bon format.\n");
         return 1;
     }
-    printf("%f\n", points);
+
+
+    //for (int i=0;i<nbPoints;i++){
+      //printf("%f\n", points+i);
 
     return 0;
 }
