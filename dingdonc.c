@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 
 
 // Structure
@@ -48,6 +49,25 @@ int lireFichier(char * nomFichier, struct GpsPoint * tableauARemplir, int longue
     // Fermer le fichier et renvoyer le nombre de lignes lues
     fclose(file);
     return n;
+}
+
+bool writeCsv(char * filename, double * values, int sizeX, int sizeY) {
+    FILE * file = fopen(filename, "w");
+    if (file == NULL) {
+        fprintf(stderr, "File %s not found.", filename);
+        return false;
+    }
+
+    for (int y = 0; y < sizeY; y++) {
+        for (int x = 0; x < sizeX; x++) {
+            if (x > 0) fprintf(file, ", ");
+            fprintf(file, "%f", values[y * sizeX + x]);
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+    return true;
 }
 
 int main(int argc, char * argv[]) {
@@ -97,6 +117,9 @@ int main(int argc, char * argv[]) {
 
 		altitudes[(((int) ymax- (int) points[i].longitude)/200)*37 + (((int) points[i].latitude- (int) xmin)/200)] = points[i].altitude;
 	}
+
+	writeCsv("altitudes.csv", altitudes, 37, 44);
+
 	free(altitudes);
 
 	//Imprimer les valeurs des altitudes se trouvant dans le malloc
