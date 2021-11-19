@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 
 
 // Structure
@@ -50,6 +51,25 @@ int lireFichier(char * nomFichier, struct GpsPoint * tableauARemplir, int longue
     return n;
 }
 
+bool writeCsv(char * filename, double * values, int sizeX, int sizeY) {
+    FILE * file = fopen(filename, "w");
+    if (file == NULL) {
+        fprintf(stderr, "File %s not found.", filename);
+        return false;
+    }
+
+    for (int y = 0; y < sizeY; y++) {
+        for (int x = 0; x < sizeX; x++) {
+            if (x > 0) fprintf(file, ", ");
+            fprintf(file, "%f", values[y * sizeX + x]);
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+    return true;
+}
+
 int main(int argc, char * argv[]) {
     // Lire le fichier
     struct GpsPoint points[1628];
@@ -62,7 +82,7 @@ int main(int argc, char * argv[]) {
         return 1;
     }
 
-	//Imprimer les valeurs x, y et les altitudes :
+ //Imprimer les valeurs x, y et les altitudes :
     //for (int i=0;i<nbPoints;i++){
       //printf("%f,%f,%f\n", points[i].altitude,points[i].longitude,points[i].latitude);
     //}
@@ -81,28 +101,31 @@ int main(int argc, char * argv[]) {
     double xmin = points[0].latitude;
     double ymax = points[0].longitude;
     for(int i=1; i<nbPoints; i++){
-		if(points[i].latitude<xmin){
-			xmin=points[i].latitude;
-		}
-	}
-	for(int i=1; i<nbPoints; i++){
-		if(points[i].longitude>ymax){
-			ymax=points[i].longitude;
-		}
-	}
+  if(points[i].latitude<xmin){
+   xmin=points[i].latitude;
+  }
+ }
+ for(int i=1; i<nbPoints; i++){
+  if(points[i].longitude>ymax){
+   ymax=points[i].longitude;
+  }
+ }
 
-	//Création du malloc contenant les altitudes :
-	double * altitudes = malloc(1628*sizeof(double));
-	for(int i=0; i<nbPoints; i++){
+ //Création du malloc contenant les altitudes :
+ double * altitudes = malloc(1628*sizeof(double));
+ for(int i=0; i<nbPoints; i++){
 
-		altitudes[(((int) ymax- (int) points[i].longitude)/200)*37 + (((int) points[i].latitude- (int) xmin)/200)] = points[i].altitude;
-	}
-	free(altitudes);
+  altitudes[(((int) ymax- (int) points[i].longitude)/200)*37 + (((int) points[i].latitude- (int) xmin)/200)] = points[i].altitude;
+ }
 
-	//Imprimer les valeurs des altitudes se trouvant dans le malloc
-	for(int i=0; i<nbPoints; i++){
-		printf("%f, ", altitudes[i]);
-	}
+ writeCsv("altitudes.csv", altitudes, 37, 44);
+
+ free(altitudes);
+
+ //Imprimer les valeurs des altitudes se trouvant dans le malloc
+ for(int i=0; i<nbPoints; i++){
+  printf("%f, ", altitudes[i]);
+ }
 
     return 0;
 }
