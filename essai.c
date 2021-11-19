@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-
+/*
 int main(int argc, char * argv[]) {
 	FILE * fichier = fopen("DHM200.xyz", "r");
 	}
@@ -34,3 +34,4 @@ for(int i = 0; i<longueur)
 
 //Libérer le tableau
 free(altitudes);
+*/
