@@ -1,5 +1,5 @@
 import numpy as np
-
+"""
 #Copier-coller d'une partie du code de l'exercice Suisse:
 # Lire le fichier
 print('Lecture du fichier')
@@ -39,6 +39,7 @@ for i in range(0, len(yp)):
         y_list.append(i)
 
 print(len(dhm200))
+"""
 """
 alt_list = []
 for i in range(0, len(h)):

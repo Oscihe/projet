@@ -111,7 +111,7 @@ int main(int argc, char * argv[]) {
 		}
 	}
 
-	//Création du malloc contenant les altitudes :
+	//Création du malloc contenant les altitudes qui sont dans notre zone :
 	double * altitudes = malloc(1628*sizeof(double));
 	for(int i=0; i<nbPoints; i++){
 
@@ -127,5 +127,24 @@ int main(int argc, char * argv[]) {
 		printf("%f, ", altitudes[i]);
 	}
 
+  //Création d'un fichier csv contenant les coordonnées du lac des Dix
+  //Pour le faire, je crée d'abord un malloc contenant :
+  //Une colonne avec les coordonnées x
+  //et une colonne avec les coordonnées y
+  double coord1x = 597200;
+  double coord1y = 098000;
+  double coord2x = 598000;
+  double coord2y = 098000;
+  double coord3x = 596200;
+  double coord3y = 101400;
+  double coord4x = 597000;
+  double coord4y = 101400;
+  double coord5x = 597000;
+  double coord5y = 103200;
+  double coord6x = 597600;
+  double coord6y = 103200;
+
+  //Calcul des droites reliant les angles du lac
+  
     return 0;
 }
