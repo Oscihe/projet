@@ -101,6 +101,7 @@ int main(int argc, char * argv[]) {
     double xmin = points[0].latitude;
     double ymax = points[0].longitude;
     for(int i=1; i<nbPoints; i++){
+<<<<<<< HEAD
   if(points[i].latitude<xmin){
    xmin=points[i].latitude;
   }
@@ -126,6 +127,52 @@ int main(int argc, char * argv[]) {
  for(int i=0; i<nbPoints; i++){
   printf("%f, ", altitudes[i]);
  }
+=======
+		if(points[i].latitude<xmin){
+			xmin=points[i].latitude;
+		}
+	}
+	for(int i=1; i<nbPoints; i++){
+		if(points[i].longitude>ymax){
+			ymax=points[i].longitude;
+		}
+	}
 
+	//Création du malloc contenant les altitudes qui sont dans notre zone :
+	double * altitudes = malloc(1628*sizeof(double));
+	for(int i=0; i<nbPoints; i++){
+
+		altitudes[(((int) ymax- (int) points[i].longitude)/200)*37 + (((int) points[i].latitude- (int) xmin)/200)] = points[i].altitude;
+	}
+
+	writeCsv("altitudes.csv", altitudes, 37, 44);
+
+	free(altitudes);
+
+	//Imprimer les valeurs des altitudes se trouvant dans le malloc
+	for(int i=0; i<nbPoints; i++){
+		printf("%f, ", altitudes[i]);
+	}
+>>>>>>> ed5d1e6a9279487773e466f2c5aebfd256a019f6
+
+  //Création d'un fichier csv contenant les coordonnées du lac des Dix
+  //Pour le faire, je crée d'abord un malloc contenant :
+  //Une colonne avec les coordonnées x
+  //et une colonne avec les coordonnées y
+  double coord1x = 597200;
+  double coord1y = 098000;
+  double coord2x = 598000;
+  double coord2y = 098000;
+  double coord3x = 596200;
+  double coord3y = 101400;
+  double coord4x = 597000;
+  double coord4y = 101400;
+  double coord5x = 597000;
+  double coord5y = 103200;
+  double coord6x = 597600;
+  double coord6y = 103200;
+
+  //Calcul des droites reliant les angles du lac
+  
     return 0;
 }
