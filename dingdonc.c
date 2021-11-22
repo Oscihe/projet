@@ -131,6 +131,27 @@ int main(int argc, char * argv[]) {
   //Pour le faire, je crée d'abord un malloc contenant :
   //Une colonne avec les coordonnées x
   //et une colonne avec les coordonnées y
+  /*
+  double coord5x = 597000;
+  double coord5y = 103200;
+  double coord6x = 597600;
+  double coord6y = 103200;
+  double coord7x = 597000;
+  double coord7y = 098000;
+  double coord8x = 597600;
+  double coord8y = 098000;
+*/
+/*
+  double * lac = malloc(108*sizeof(double));
+  ...
+
+	writeCsv("lac_coord.csv", lac, 2, 54);
+
+	free(lac);
+*/
+  /*
+  //voir plus tard comment calculer les droites entre les angles du lac
+  //D'abord faire tourner le programme juste avec un rectangle comme lac
   double coord1x = 597200;
   double coord1y = 098000;
   double coord2x = 598000;
@@ -144,7 +165,12 @@ int main(int argc, char * argv[]) {
   double coord6x = 597600;
   double coord6y = 103200;
 
-  //Calcul des droites reliant les angles du lac
-  
-    return 0;
+  //Calcul des droites reliant les "angles" du lac
+  //Droite 1 à 3
+  double Dx13 = coord1x-coord3x;
+  double Dy13 = coord3y-coord1y;
+  double pente13 = Dy/Dx;
+  */
+
+  return 0;
 }
