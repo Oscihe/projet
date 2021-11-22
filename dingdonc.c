@@ -82,7 +82,7 @@ int main(int argc, char * argv[]) {
         return 1;
     }
 
-	//Imprimer les valeurs x, y et les altitudes :
+ //Imprimer les valeurs x, y et les altitudes :
     //for (int i=0;i<nbPoints;i++){
       //printf("%f,%f,%f\n", points[i].altitude,points[i].longitude,points[i].latitude);
     //}
@@ -101,6 +101,33 @@ int main(int argc, char * argv[]) {
     double xmin = points[0].latitude;
     double ymax = points[0].longitude;
     for(int i=1; i<nbPoints; i++){
+<<<<<<< HEAD
+  if(points[i].latitude<xmin){
+   xmin=points[i].latitude;
+  }
+ }
+ for(int i=1; i<nbPoints; i++){
+  if(points[i].longitude>ymax){
+   ymax=points[i].longitude;
+  }
+ }
+
+ //Création du malloc contenant les altitudes :
+ double * altitudes = malloc(1628*sizeof(double));
+ for(int i=0; i<nbPoints; i++){
+
+  altitudes[(((int) ymax- (int) points[i].longitude)/200)*37 + (((int) points[i].latitude- (int) xmin)/200)] = points[i].altitude;
+ }
+
+ writeCsv("altitudes.csv", altitudes, 37, 44);
+
+ free(altitudes);
+
+ //Imprimer les valeurs des altitudes se trouvant dans le malloc
+ for(int i=0; i<nbPoints; i++){
+  printf("%f, ", altitudes[i]);
+ }
+=======
 		if(points[i].latitude<xmin){
 			xmin=points[i].latitude;
 		}
@@ -126,6 +153,7 @@ int main(int argc, char * argv[]) {
 	for(int i=0; i<nbPoints; i++){
 		printf("%f, ", altitudes[i]);
 	}
+>>>>>>> ed5d1e6a9279487773e466f2c5aebfd256a019f6
 
   //Création d'un fichier csv contenant les coordonnées du lac des Dix
   //Pour le faire, je crée d'abord un malloc contenant :

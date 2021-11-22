@@ -3,15 +3,20 @@
 #include <string.h>
 #include <math.h>
 //#include <json-c/json.h>
-//#include <curl/curl.h>
+//#include <curl/curl.h
 
 //commencer par ouvrir le fichier de données météo et ensuite
 //les implémentés dans une structures Gps (coordonnées, altitude et précipitations)
 //S'inspirer de l'exo terrain pour déterminer ou l'eau va se précipiter à l'aide de
 //l'interpolation
-struct Gps_point {
-	double latitude;
-	double longitude;
+struct Grille {
+	double lat;
+	double long;
+	double pluie;
+	double alt;
+	int lac;
+	int catch;
+	double time;
 }
 
 //changer l'angle de 0.01 degré décimale fait un changement de 1,11km.
@@ -38,11 +43,11 @@ int main(int argc, char * argv[]) {
 		for (int j=0;j<2;j++){
 			p=p+1;
 			longitude=longitude+0.04;
-			char site[1000];
+			char site[1000];//"https://my.meteoblue.com/packages/basic-1h?apikey=8265088095b8&lat=%f&lon=%f&asl=453&tz=Europe%%2FZurich&city=Lausanne\" -o precipitation%d.json",latitude,longitude,p)
 			sprintf(site,"curl \"https://my.meteoblue.com/packages/basic-1h?apikey=8265088095b8&lat=%f&lon=%f&asl=453&tz=Europe%%2FZurich&city=Lausanne\" -o precipitation%d.json",latitude,longitude,p);
 			printf("%s\n",site);
 			system(site);
-}
+		}
 	}
 fclose(doc);
 return 0;
