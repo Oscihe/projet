@@ -124,20 +124,20 @@ struct Depart{
 };
 
 bool avancerEau(struct Point * point, struct Grille * grilles, struct Depart * depart) {
-
+	
     // Vérifier si on est au bord
     if (point->x == 592800) return false;
     if (point->y == 103800) return false;
     if (point->x == 600000) return false;
     if (point->y == 95200) return false;
-
+    
 	int indice = indexing(depart->x, depart->y);
 	//printf("%d, %d\n", depart->x, depart->y);
 	//les coordonnées chgt au début et reste après tjr à 597400, 102800 => indice 208
 	//printf("%d\n", indice);
 	//c'est l'indice de la case de départ (la case où l'eau est tombée)
 	//ça me print tjr le même indice alors que les coord chgt...
-
+	
 	//x=latitude et y=longitude
 	//printf("%f\n", grilles[indice].alt);
     // Chercher le minimum dans un voisinage de 3x3 cases
@@ -180,7 +180,7 @@ bool avancerEau(struct Point * point, struct Grille * grilles, struct Depart * d
     }
 
     // Si le minimum se trouve au centre, on a un "trou" (lac, ou erreur dans les données)
-
+    
     if (minX == 0 && minY == 0){
 		if (grilles[indexing(point->x, point->y)].lac==1){
 			grilles[indice].catch=1;
@@ -190,7 +190,7 @@ bool avancerEau(struct Point * point, struct Grille * grilles, struct Depart * d
 		}
 		return false;
 	}
-
+	
     // Avancer le point vers le minimum
     point->x += minX;
     point->y += minY;
@@ -317,12 +317,12 @@ int main(int argc, char * argv[]) {
 
 
 	//Imprimer les valeurs des altitudes se trouvant dans le malloc
-
+	
 	//printf("%d\n", nbPoints);
 	for(int i=0; i<nbPoints; i++){
 		//printf("%f\n", altitudes[i]);
 	}
-
+	
 
 	//int lenxp=37;
 	//int lenyp=44;
@@ -332,12 +332,12 @@ int main(int argc, char * argv[]) {
 	//for (int l=0;l<total;l++){
 	initialisation(altitudes,1628,1,598000,596200,98000,103200,grilles);
 	//latitude = x et longitude = y
-
+	
 	//Simuler 1 goutte
 	//simulerEau(592800, 100000, grilles);
-
+	
 	// Simuler beaucoup de gouttes
-
+	
     for (int y = 103800; y >= 95200; y=y-200) {
         for (int x = 592800; x <= 600000; x=x+200) {
 			struct Depart depart;
@@ -347,7 +347,7 @@ int main(int argc, char * argv[]) {
             simulerEau(x, y, grilles, &depart);
         }
     }
-
+	
 	int * eau = malloc(1628*sizeof(int));
 	for(int i=0; i<nbPoints; i++){
 		eau[i] = grilles[i].catch;
@@ -356,8 +356,8 @@ int main(int argc, char * argv[]) {
 		//printf("%d\n", indexing(points[i].latitude, points[i].longitude));
 	}
 	writeCsv("eau.csv", eau, 37, 44);
-
-
+	
+	
 	int * lac = malloc(1628*sizeof(int));
 	for(int i=0; i<nbPoints; i++){
 		lac[i] = grilles[i].lac;
@@ -366,7 +366,7 @@ int main(int argc, char * argv[]) {
 		//printf("%d\n", indexing(points[i].latitude, points[i].longitude));
 	}
 	writeCsv("lac.csv", lac, 37, 44);
-
+	
 	/*
 	for(int m=0;m<1628;m++){
 		//printf("ok");
