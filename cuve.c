@@ -4,6 +4,13 @@
 #include <stdbool.h>
 #include <math.h>
 
+//#include "fichier.c"
+//mettre toutes les struct dans le fichier main
+//et que des fichiers dans les autres doc (pas de main)
+
+//dans goutte : num case départ (avec index peut retrouver les coord) et temps qu'elle prend
+//case : pente en x et y, catch, lac
+
 // Structure
 struct GpsPoint {
 	double latitude;
@@ -123,8 +130,13 @@ struct Depart{
 	int y;
 };
 
+//Volume d'eau total (obtenu par la pluie) ajouté au lac
+/*
+struct Volume{
+	double quantite;
+};
+*/
 bool avancerEau(struct Point * point, struct Grille * grilles, struct Depart * depart) {
-
     // Vérifier si on est au bord
     if (point->x == 592800) return false;
     if (point->y == 103800) return false;
@@ -179,8 +191,7 @@ bool avancerEau(struct Point * point, struct Grille * grilles, struct Depart * d
         }
     }
 
-    // Si le minimum se trouve au centre, on a un "trou" (lac, ou erreur dans les données)
-
+    // Si le minimum se trouve au centre, on a un "trou" (lac des Dix, ou un autre lac, ou erreur dans les données)
     if (minX == 0 && minY == 0){
 		if (grilles[indexing(point->x, point->y)].lac==1){
 			grilles[indice].catch=1;
@@ -190,6 +201,20 @@ bool avancerEau(struct Point * point, struct Grille * grilles, struct Depart * d
 		}
 		return false;
 	}
+
+    /*
+    if (minX == 0 && minY == 0 && grilles[indexing(point->x, point->y)].lac!=1){
+		return false;
+	}
+	//ajouter la quantité dans qui tombe dans le lac
+	if(grilles[indexing(point->x, point->y)].lac==1){
+		grilles[indice].catch=1;
+		volume->quantite += grilles[indice].pluie;
+		//printf("%d\n",grilles->catch);
+		//printf("ok");
+		return true;
+	}
+	*/
 
     // Avancer le point vers le minimum
     point->x += minX;
@@ -201,14 +226,6 @@ bool avancerEau(struct Point * point, struct Grille * grilles, struct Depart * d
 		//printf("ok");
 		return true;
 	}
-	/*
-    if (grilles[]->lac==1){
-		grilles[]->catch=1;
-		//printf("%d\n",grilles->catch);
-		//printf("ok");
-		return true;
-	}
-	*/
     return true;
 }
 
@@ -273,6 +290,7 @@ double  accumulation (int compteur1,struct Grille *grilles) {
 	return 1;
 }
 */
+
 struct Grille grilles[37*44];
 
 int main(int argc, char * argv[]) {
@@ -327,7 +345,7 @@ int main(int argc, char * argv[]) {
 	//int lenxp=37;
 	//int lenyp=44;
 	//int total=lenxp*lenyp;
-	double quantite=0;
+	//double quantite=0;
 	//struct Grille grilles[total];
 	//for (int l=0;l<total;l++){
 	initialisation(altitudes,1628,1,598000,596200,98000,103200,grilles);
@@ -335,7 +353,10 @@ int main(int argc, char * argv[]) {
 
 	//Simuler 1 goutte
 	//simulerEau(592800, 100000, grilles);
-
+	/*
+	struct Volume volume;
+	volume.quantite = 0;
+	*/
 	// Simuler beaucoup de gouttes
 
     for (int y = 103800; y >= 95200; y=y-200) {
@@ -343,6 +364,7 @@ int main(int argc, char * argv[]) {
 			struct Depart depart;
 			depart.x = x;
 			depart.y = y;
+
 			//printf("%d, %d\n", depart.x, depart.y);
             simulerEau(x, y, grilles, &depart);
         }
@@ -382,11 +404,12 @@ int main(int argc, char * argv[]) {
 		}
 	}
 	*/
-	double volume_tot=quantite/1000*200;
-	printf("Le volume totale d'eau est: %f",volume_tot);
+
+	//double volume_tot=(volume.quantite/1000)*200;
+	//printf("Le volume totale d'eau est: %f",volume_tot);
 
 	free(altitudes);
-	//free(eau);
-	//free(lac);
+	free(eau);
+	free(lac);
 	return 0;
 }
